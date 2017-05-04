@@ -313,22 +313,8 @@ function processOptions(wpOpt) {
 	if(argv["open"])
 		options.open = true;
 
-	// Kind of weird, but ensures prior behavior isn't broken in cases
-	// that wouldn't throw errors. E.g. both argv.port and options.port
-	// were specified, but since argv.port is 8080, options.port will be
-	// tried first instead.
-	options.port = argv.port === DEFAULT_PORT ? (options.port || argv.port) : (argv.port || options.port);
-	if(options.port) {
-		startDevServer(wpOpt, options);
-		return;
-	}
-
-	portfinder.basePort = process.env.PORT || DEFAULT_PORT;
-	portfinder.getPort(function(err, port) {
-		if(err) throw err;
-		options.port = port;
-		startDevServer(wpOpt, options);
-	});
+	options.port = process.env.PORT || DEFAULT_PORT;
+	startDevServer(wpOpt, options);
 }
 
 function startDevServer(wpOpt, options) {
