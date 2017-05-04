@@ -323,7 +323,7 @@ function processOptions(wpOpt) {
 		return;
 	}
 
-	portfinder.basePort = DEFAULT_PORT;
+	portfinder.basePort = process.env.PORT || DEFAULT_PORT;
 	portfinder.getPort(function(err, port) {
 		if(err) throw err;
 		options.port = port;
